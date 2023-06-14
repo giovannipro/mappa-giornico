@@ -15,11 +15,8 @@ function manage_url(){
 
         urlParams.set('luogo', id);
         window.location.search = urlParams;
-
         set_background(id)
-        console.log(id)
     }
-
 
 }
 
@@ -39,12 +36,10 @@ function set_background(){
     const elem = document.getElementById("test");
     elem.style.backgroundColor = color;
     console.log(id,color)
-
-
 }
 
 window.addEventListener('load', function () {
+    // console.log('ready')
     manage_url()
     set_background();
-
 })
