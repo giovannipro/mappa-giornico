@@ -8,29 +8,34 @@
 	// query db
 	// --------------------------------------------
 
-	$query_a = "SELECT * 
+	$query = "SELECT * 
 		FROM locations
 	";
 
+
 	// get data
 	// --------------------------------------------
-	
-	$result_a = $conn->query($query_a);
-	// $data_a = array();
 
-	$items = $result_a->num_rows;
 
-	if ($result_a->num_rows > 0) {
-		
-		echo "id name lat lon" . "<br/>" ;
+	$conn = mysqli_connect($servername, $username, $password, $dbname);
+	if (!$conn) {
+		die("Connection failed: " . mysqli_connect_error());
+	}
+	$result = mysqli_query($conn, $query);
 
-		while($row = $result_a->fetch_assoc()) {
-			echo (int)$row["id"] . " " . $row["name"] . " " . (float)$row["lat"] . " " . (float)$row["lon"] . "<br/>";
-		}
-	} 
-	else {
-		echo "0 results";
+	$data = array();
+	while ($row = mysqli_fetch_assoc($result)) {
+		$data[] = $row;
 	}
 
-	$conn->close();
+	$json = json_encode($data);
+	if ($json === false) {
+  		die("JSON encoding failed");
+	}
+	echo $json;
+
+	header('Content-Type: application/json');
+
+	mysqli_close($conn);
+
 ?>
