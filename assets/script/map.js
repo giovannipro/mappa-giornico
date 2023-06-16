@@ -6,7 +6,7 @@ let max_zoom = 19;
 let map_center = [46.4019, 8.8752];
 
 // sidebar
-const sidebarA_container = document.getElementById("sidebarA");
+const sidebarA_container = document.getElementById("sidebarA_content");
 
 function load_data(){
     let data_link = "assets/php/get_data.php";
@@ -36,6 +36,9 @@ function map(data){
 
         const marker = L.marker([lat, lng]).addTo(map);
         marker.bindPopup(name);
+
+        sContent = '<li>' + name + '</li>'
+        sidebarA_container.innerHTML += sContent;
     });
 
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -45,7 +48,6 @@ function map(data){
         tileSize: 256
     }).addTo(map);
 
-    sidebarA_container.innerHTML = 'This is the sidebar content.';
 
 
 
