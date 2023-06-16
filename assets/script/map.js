@@ -1,10 +1,15 @@
 // map
 const map_container = "map_container";
-let min_zoom = 15;
+let min_zoom = 14;
 let default_zoom = 16;
 let max_zoom = 19;
 let map_center = [46.4019, 8.8752];
 let map_data;
+
+const map = L.map(map_container, {
+    center: map_center,
+    zoom: default_zoom
+});
 
 // sidebar
 const sidebarA_container = document.getElementById("sidebarA_content");
@@ -17,7 +22,7 @@ function load_data(){
         .then(response => response.json())
         .then((data) => {
             map_data = data
-            map(data)
+            make_map(data)
             console.log(data)
         })
         .catch(error => {
@@ -25,14 +30,9 @@ function load_data(){
         });
 }
 
-function map(data){
+function make_map(data){
 
-    // map
-    const map = L.map(map_container, {
-        center: map_center,
-        zoom: default_zoom
-    });
-
+    // map info
     L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>',
         minZoom: min_zoom,
@@ -66,12 +66,18 @@ function update_sidebarB(){
     id = this.getAttribute('data-id')
     selectedData = map_data[id - 1]
 
-    let content = ''
+    id = selectedData['id']
+    name = selectedData['name'] 
+    lat = selectedData['lat']
+    lon = selectedData['lon']
 
-    content += '<li>' + selectedData['id'] + '</li>'
-    content += '<li>' + selectedData['name'] + '</li>'
-    content += '<li>' + selectedData['lat'] + '</li>'
-    content += '<li>' + selectedData['lon'] + '</li>'
+    let content = ''
+    content += '<li>' + id + '</li>'
+    content += '<li>' + name + '</li>'
+    content += '<li>' + lat + '</li>'
+    content += '<li>' + lon + '</li>'
+
+    set_view(lat,lon)
 
     // Object.keys(selectedData).forEach(key => {
     //     // console.log(key + ": " + selectedData[key]);
@@ -83,6 +89,11 @@ function update_sidebarB(){
 
     sidebarB_container.innerHTML = content;
 }
+
+function set_view(lat,lon){
+    map.setView([lat, lon], default_zoom+1);
+}
+
 
 function set_url_param() {
     let name = this.getAttribute('data-name')
