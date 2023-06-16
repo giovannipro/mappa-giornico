@@ -79,10 +79,7 @@ function make_map(data){
         const id = item.id;
         const lat = item.latitude;
         const lon = item.longitude;
-        let shortA = item.short_name;
-        shortB = shortA.toLowerCase();
-        shortC = shortB.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'');
-        short = shortC.replaceAll(' ', '_')
+        const short = item.short_name;
 
         const marker = L.marker([lat, lon]).addTo(map);
         marker.bindPopup(name);

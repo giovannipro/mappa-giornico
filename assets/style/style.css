@@ -69,6 +69,7 @@ main {
 /* - sidebar */
 .sidebar{
 	border-right: 1px solid #ccc;
+	overflow-y: scroll;
 }
 
 #sidebarA {
@@ -82,6 +83,10 @@ main {
 	border-bottom: 1px solid #ccc;
 	padding: 0.5rem;
 	cursor: pointer;
+}
+
+#sidebarB_content {
+    padding: 0.5rem;
 }
 
 #sidebarB {
