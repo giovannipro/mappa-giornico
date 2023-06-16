@@ -23,9 +23,23 @@ function load_data(){
     fetch(data_link)
         .then(response => response.json())
         .then((data) => {
+            
+            // sort
+            data.sort((a, b) => {
+                if (a.name < b.name) return -1;
+                if (a.name > b.name) return 1;
+                return 0;
+            });
+
+            // update index
+            newId = 0
+            for (let key in data) {
+                newId += 1
+                data[key].id = newId
+            }
+            
             map_data = data
             make_map(data)
-            console.log(data)
         })
         .catch(error => {
             console.error('Error fetching JSON data:', error);
@@ -43,6 +57,8 @@ function make_map(data){
         maxZoom: max_zoom,
         tileSize: 256
     }).addTo(map);
+
+    // sort data
 
     // load marker
     data.forEach(item => {
@@ -81,8 +97,9 @@ function update_sidebarB(){
     //     id = urlParams.get('id')
     // }
 
-    id = this.getAttribute('data-id')
-    selectedData = map_data[id - 1]
+    myid = this.getAttribute('data-id')
+    selectedData = map_data[myid - 1]
+    // console.log(myid,selectedData)
 
     id = selectedData['id']
     name = selectedData['name'] 
