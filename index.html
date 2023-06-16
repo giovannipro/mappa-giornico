@@ -5,22 +5,39 @@
 		<title>Mappa Giornico</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="assets/style/style.css" />
+		<!-- leaflet map-->
+		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+		<link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar/src/L.Control.Sidebar.css" />
+		<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+		<script src="https://unpkg.com/leaflet-sidebar/src/L.Control.Sidebar.js"></script>
 	</head>
 	<body>
-		<h1>
-			Mappa Giornico
-		</h1>
-		<div style="margin-top: 2rem;">
-			<p id="1" class="button">test_1</p>
-			<p id="2" class="button">test_2</p>
-			<p id="3" class="button">test_3</p>
-			<p id="4" class="button">test_4</p>
-			<p id="5" class="button">test_5</p>
-			<p id="6" class="button">test_6</p>
-		</div>
+		<header>
+			<h1>
+				Mappa Giornico
+			</h1>
+		</header>
 
-		<div id="test"></div>
+		<section style="display: flex;">
+			<div style="margin-top: 2rem; width: 20%;">
+				<p id="1" class="button">test_1</p>
+				<p id="2" class="button">test_2</p>
+				<p id="3" class="button">test_3</p>
+				<p id="4" class="button">test_4</p>
+				<p id="5" class="button">test_5</p>
+				<p id="6" class="button">test_6</p>
+			</div>
+
+			<div id="test"></div>
+		</section>
+
+		<main>
+			<div id="map_container"></div>
+			<!-- <div id="sidebarA"></div>
+			<div id="sidebarB"></div> -->
+		</main>
 		
+		<script src="assets/script/map.js"></script>
 		<script src="assets/script/script.js"></script>
 	</body>
 </html>

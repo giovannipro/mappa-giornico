@@ -51,4 +51,6 @@ window.addEventListener('load', function () {
     // console.log('ready')
     manage_url()
     set_background();
+
+    map();
 })
