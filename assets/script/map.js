@@ -50,7 +50,7 @@ function map(data){
         const marker = L.marker([lat, lng]).addTo(map);
         marker.bindPopup(name);
 
-        sContent = '<li class="button" data-id="' + id +'">' + name + '</li>'
+        sContent = '<li class="button" data-name="' + name + '"data-id="' + id +'">' + name + '</li>'
         sidebarA_container.innerHTML += sContent;
     });
 
@@ -67,24 +67,30 @@ function update_sidebarB(){
     selectedData = map_data[id - 1]
 
     let content = ''
-    Object.keys(selectedData).forEach(key => {
-        // console.log(key + ": " + selectedData[key]);
 
-        content += '<li>'
-        content += selectedData[key];
-        content += '</li>'
-    });
+    content += '<li>' + selectedData['id'] + '</li>'
+    content += '<li>' + selectedData['name'] + '</li>'
+    content += '<li>' + selectedData['lat'] + '</li>'
+    content += '<li>' + selectedData['lon'] + '</li>'
+
+    // Object.keys(selectedData).forEach(key => {
+    //     // console.log(key + ": " + selectedData[key]);
+
+    //     content += '<li>'
+    //     content += selectedData[key];
+    //     content += '</li>'
+    // });
 
     sidebarB_container.innerHTML = content;
 }
 
 function set_url_param() {
-    let id = this.getAttribute('data-id')
+    let name = this.getAttribute('data-name')
     const newURL = new URL(window.location.href);
 
     // set location
     let newParams = {
-        l: id 
+        l: name 
     };
       
     // Update or add the parameters to the URL
