@@ -11,20 +11,29 @@ function manage_url(){
 
     function set_url_param() {
         let id = this.id
-        console.log(id)
-
-        urlParams.set('luogo', id);
-        window.location.search = urlParams;
         set_background(id)
-    }
 
+        let newParams = {
+            loc: id
+        };
+
+        const newURL = new URL(window.location.href);
+          
+        // Update or add the parameters to the URL
+        Object.keys(newParams).forEach(key => {
+            newURL.searchParams.set(key, newParams[key]);
+        });
+
+        // Replace the current URL without refreshing the page
+        window.history.replaceState({}, '', newURL);
+    }
 }
 
 function set_background(){
     let color;
 
     let search = new URLSearchParams(window.location.search);
-    let id = search.get('luogo');
+    let id = search.get('loc');
 
     if (id == 1) color = "red";
     else if (id == 2) color = "lightblue";
