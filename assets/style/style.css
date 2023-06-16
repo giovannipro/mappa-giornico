@@ -45,26 +45,30 @@ table {
 }
 
 /* - layout */
+header {
+	height: 60px;
+	display: flex;
+	justify-content: space-between;
+}
+
 main {
-	width: 100hv;
-	height: 80vh;
+	height: calc(100vh - 60px);
 	display: flex;
 	overflow: hidden;
 }
 
-
 /* - map */
 #map_container {
+	height: calc(100% - 60px);
+	width: calc(100vw - 250px);
 	position: absolute;
 	left: 250px;
-	width: calc(100% - 100px);
-	height: 100%;
 }
 
 #sidebarA {
+	height: calc(100% - 60px);
 	width: 250px;
 	height: 100%;
-/*	position: absolute;*/
 	background-color: white;
 }
 
