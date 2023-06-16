@@ -44,7 +44,6 @@ function set_background(){
 
     const elem = document.getElementById("test");
     elem.style.backgroundColor = color;
-    console.log(id,color)
 }
 
 window.addEventListener('load', function () {
