@@ -40,6 +40,7 @@ function load_data(){
             
             map_data = data
             make_map(data)
+            // console.log(data)
         })
         .catch(error => {
             console.error('Error fetching JSON data:', error);
@@ -58,14 +59,26 @@ function make_map(data){
         tileSize: 256
     }).addTo(map);
 
-    // sort data
+    // fix data
+    data.forEach(item => {
+        item.latitude = parseFloat(item.latitude);
+        item.longitude = parseFloat(item.longitude); 
 
+        let shortA = item.short_name;
+        let shortB = shortA.toLowerCase();
+        let shortC = shortB.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'');
+        let shortD = shortC.replaceAll(' ', '_')
+
+        item.short_name = shortD
+    })
+    console.log(data)
+        
     // load marker
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
-        const lat = item.lat;
-        const lon = item.lon;
+        const lat = item.latitude;
+        const lon = item.longitude;
         let shortA = item.short_name;
         shortB = shortA.toLowerCase();
         shortC = shortB.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'');
@@ -103,14 +116,18 @@ function update_sidebarB(){
 
     id = selectedData['id']
     name = selectedData['name'] 
-    lat = selectedData['lat']
-    lon = selectedData['lon']
+    lat = selectedData['latitude']
+    lon = selectedData['longitude']
+    abstract = selectedData['abstract']
 
     let content = ''
     content += '<li>' + id + '</li>'
     content += '<li>' + name + '</li>'
     content += '<li>' + lat + '</li>'
     content += '<li>' + lon + '</li>'
+    content += '<br/>'
+
+    content += '<li>' + abstract + '</li>'
     sidebarB_container.innerHTML = content;
 
     set_view(lat,lon)
@@ -124,12 +141,6 @@ function get_url_param(lat,lon){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const location = urlParams.get('l')
-
-    // update_sidebarB()
-
-    // // console.log(queryString)
-    // // console.log(urlParams)
-    // console.log(location)
 }
 
 function set_url_param() {
