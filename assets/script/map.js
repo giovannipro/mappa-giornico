@@ -11,6 +11,8 @@ const map = L.map(map_container, {
     zoom: default_zoom
 });
 
+let currentId = 0;
+
 // sidebar
 const sidebarA_container = document.getElementById("sidebarA_content");
 const sidebarB_container = document.getElementById("sidebarB_content");
@@ -28,6 +30,8 @@ function load_data(){
         .catch(error => {
             console.error('Error fetching JSON data:', error);
         });
+
+    get_url_param();
 }
 
 function make_map(data){
@@ -45,12 +49,16 @@ function make_map(data){
         const name = item.name;
         const id = item.id;
         const lat = item.lat;
-        const lng = item.lon;
+        const lon = item.lon;
+        let shortA = item.short_name;
+        shortB = shortA.toLowerCase();
+        shortC = shortB.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'');
+        short = shortC.replaceAll(' ', '_')
 
-        const marker = L.marker([lat, lng]).addTo(map);
+        const marker = L.marker([lat, lon]).addTo(map);
         marker.bindPopup(name);
 
-        sContent = '<li class="button" data-name="' + name + '"data-id="' + id +'">' + name + '</li>'
+        sContent = '<li class="button" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '">' + name + '</li>'
         sidebarA_container.innerHTML += sContent;
     });
 
@@ -63,6 +71,16 @@ function make_map(data){
 }
 
 function update_sidebarB(){
+    // console.log(currentId)
+
+    // if (currentId != 0){
+    // }
+    // else {
+    //     const queryString = window.location.search;
+    //     const urlParams = new URLSearchParams(queryString);
+    //     id = urlParams.get('id')
+    // }
+
     id = this.getAttribute('data-id')
     selectedData = map_data[id - 1]
 
@@ -76,32 +94,36 @@ function update_sidebarB(){
     content += '<li>' + name + '</li>'
     content += '<li>' + lat + '</li>'
     content += '<li>' + lon + '</li>'
+    sidebarB_container.innerHTML = content;
 
     set_view(lat,lon)
-
-    // Object.keys(selectedData).forEach(key => {
-    //     // console.log(key + ": " + selectedData[key]);
-
-    //     content += '<li>'
-    //     content += selectedData[key];
-    //     content += '</li>'
-    // });
-
-    sidebarB_container.innerHTML = content;
 }
 
 function set_view(lat,lon){
     map.setView([lat, lon], default_zoom+1);
 }
 
+function get_url_param(lat,lon){
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const location = urlParams.get('l')
+
+    // update_sidebarB()
+
+    // // console.log(queryString)
+    // // console.log(urlParams)
+    // console.log(location)
+}
 
 function set_url_param() {
-    let name = this.getAttribute('data-name')
+    let id = this.getAttribute('data-id')
+    let name = this.getAttribute('data-short')
     const newURL = new URL(window.location.href);
 
     // set location
     let newParams = {
-        l: name 
+        // id: id, 
+        lo: name
     };
       
     // Update or add the parameters to the URL
