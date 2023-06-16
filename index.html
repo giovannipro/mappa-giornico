@@ -5,6 +5,7 @@
 		<title>Mappa Giornico</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" type="text/css" href="assets/style/style.css" />
+		<link rel="stylesheet" type="text/css" href="assets/style/reset.css" />
 		<!-- leaflet map-->
 		<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 		<link rel="stylesheet" href="https://unpkg.com/leaflet-sidebar/src/L.Control.Sidebar.css" />
@@ -23,12 +24,14 @@
 			</h2>
 		</header>
 		<main>
-			<div id="sidebarA" class="sidebar">
-				<ul id="sidebarA_content"></ul>
-			</div>
-			<div id="sidebarB" class="sidebar">
-				<ul id="sidebarB_content"></ul>
-			</div>
+			<section id="sidebars">
+				<div id="sidebarA" class="sidebar">
+					<ul id="sidebarA_content"></ul>
+				</div>
+				<div id="sidebarB" class="sidebar">
+					<ul id="sidebarB_content"></ul>
+				</div>
+			</section>
 			<div id="map_container"></div>
 		</main>
 		

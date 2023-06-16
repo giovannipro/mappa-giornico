@@ -1,80 +1,41 @@
-/* - reset- */
-
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed, 
-figure, figcaption, footer, header, hgroup, 
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-	margin: 0;
-	padding: 0;
-	border: 0;
-	font-size: 100%;
-	font: inherit;
-	vertical-align: baseline;
-}
-/* HTML5 display-role reset for older browsers */
-article, aside, details, figcaption, figure, 
-footer, header, hgroup, menu, nav, section {
-	display: block;
-}
-body {
-	line-height: 1;
-}
-ol, ul {
-	list-style: none;
-}
-blockquote, q {
-	quotes: none;
-}
-blockquote:before, blockquote:after,
-q:before, q:after {
-	content: '';
-	content: none;
-}
-table {
-	border-collapse: collapse;
-	border-spacing: 0;
-}
-
-/* - layout */
+/* - layout - */
 header {
 	height: 60px;
+	padding: 0.5rem;
 	display: flex;
-	justify-content: space-between;
 	border-bottom: 1px solid #ccc;
+	justify-content: space-between;
+	background-color: white;
 }
 
 main {
 	height: calc(100vh - 60px);
 	display: flex;
-	overflow: hidden;
+/*	overflow: hidden;*/
 }
 
 /* - map */
 #map_container {
-	height: calc(100% - 60px);
 	width: calc(100vw - 400px);
-	position: absolute;
-	left: 400px;
+/*	height: calc(100% - 60px);*/
+/*	position: absolute;*/
+/*	left: 400px;*/
 }
 
-/* - sidebar */
+/* - sidebar -  */
 .sidebar{
 	border-right: 1px solid #ccc;
 	overflow-y: scroll;
 }
 
+#sidebars {
+	width: 400px;
+	display: flex;
+}
+
 #sidebarA {
 	height: calc(100% - 60px);
-	width: 200px;
+	width: 50%;
 	height: 100%;
 	background-color: white;
 }
@@ -85,18 +46,14 @@ main {
 	cursor: pointer;
 }
 
-#sidebarB_content {
-/*    padding: 0.5rem;*/
-}
-
 #sidebarB {
 	height: calc(100% - 60px);
-	width: 200px;
+	width: 50%;
 	height: 100%;
 	background-color: white;
 }
 
-/* - sidebar content */
+/* - sidebar content - */
 #cover {
 	height: 200px;
 	width: auto;
@@ -106,7 +63,7 @@ main {
 }
 
 
-/* - debug */
+/* - debug - */
 .button:hover {
 	background-color: lightgray;
 }
@@ -119,6 +76,31 @@ main {
 }
 
 
+
+/* - responsive - */
+
+@media only screen and (max-width: 750px) {
+
+	main {
+  		-webkit-flex-direction: column-reverse; 
+  		flex-direction: column-reverse;
+  		height: auto;
+	}
+
+  	#sidebars {
+  		width: 100vw;
+  		height: 50vh;
+  	}
+
+  	#map_container{
+  		height: 60vh;
+  		width: 100vw;
+  	}
+
+
+
+
+}
 
 
 
