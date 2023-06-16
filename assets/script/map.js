@@ -13,6 +13,18 @@ const map = L.map(map_container, {
 
 let currentId = 0;
 
+const images = [
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/9/95/Hubble_captures_crisp_new_image_of_Jupiter_and_Europa_%2850354436493%29.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg",
+    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg"
+]
+
 // sidebar
 const sidebarA_container = document.getElementById("sidebarA_content");
 const sidebarB_container = document.getElementById("sidebarB_content");
@@ -116,8 +128,9 @@ function update_sidebarB(){
     lat = selectedData['latitude']
     lon = selectedData['longitude']
     abstract = selectedData['abstract']
-
+    
     let content = ''
+    content += '<li>' + '<div id="cover" style="background-image: url(' + images[myid] + ')">' + '</div>'
     content += '<li>' + id + '</li>'
     content += '<li>' + name + '</li>'
     content += '<li>' + lat + '</li>'

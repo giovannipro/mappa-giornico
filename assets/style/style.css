@@ -86,7 +86,7 @@ main {
 }
 
 #sidebarB_content {
-    padding: 0.5rem;
+/*    padding: 0.5rem;*/
 }
 
 #sidebarB {
@@ -95,6 +95,16 @@ main {
 	height: 100%;
 	background-color: white;
 }
+
+/* - sidebar content */
+#cover {
+	height: 200px;
+	width: auto;
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+
 
 /* - debug */
 .button:hover {
