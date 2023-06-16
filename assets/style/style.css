@@ -61,9 +61,9 @@ main {
 /* - map */
 #map_container {
 	height: calc(100% - 60px);
-	width: calc(100vw - 500px);
+	width: calc(100vw - 400px);
 	position: absolute;
-	left: 500px;
+	left: 400px;
 }
 
 .sidebar{
@@ -72,14 +72,14 @@ main {
 
 #sidebarA {
 	height: calc(100% - 60px);
-	width: 250px;
+	width: 200px;
 	height: 100%;
 	background-color: white;
 }
 
 #sidebarB {
 	height: calc(100% - 60px);
-	width: 250px;
+	width: 200px;
 	height: 100%;
 	background-color: white;
 }
