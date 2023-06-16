@@ -50,5 +50,5 @@ window.addEventListener('load', function () {
     manage_url()
     set_background();
 
-    map();
+    load_data();
 })
