@@ -9,7 +9,7 @@
 	// --------------------------------------------
 
 	$query = "SELECT * 
-		FROM locations
+		FROM giornico
 	";
 
 
