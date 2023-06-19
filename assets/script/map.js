@@ -258,7 +258,9 @@ function updateState(){
 
 function set_url_param() {
     let id = this.getAttribute('data-id')
-    let name = this.getAttribute('data-short')
+    name = map_data[id - 1].name
+
+    // let name = this.getAttribute('data-short')
     const newURL = new URL(window.location.href);
 
     let newParams = {
