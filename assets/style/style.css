@@ -1,15 +1,19 @@
 /* - layout - */
 header {
-	height: 60px;
-	padding: 0.5rem;
-	display: flex;
-	border-bottom: 1px solid #ccc;
-	justify-content: space-between;
+	height: 40px;
 	background-color: white;
+	border-bottom: 1px solid #ccc;
+}
+
+#header {
+	padding: 0.5rem;
+	height: calc(40px - 1rem);
+	display: flex;
+	justify-content: space-between;
 }
 
 #main {
-	height: calc(100vh - 60px);
+	height: calc(100vh - 40px);
 	display: flex;
 /*	overflow: hidden;*/
 }
@@ -17,9 +21,6 @@ header {
 /* - map */
 #map_container {
 	width: calc(100vw - 400px);
-/*	height: calc(100% - 60px);*/
-/*	position: absolute;*/
-/*	left: 400px;*/
 }
 
 /* - sidebar -  */
@@ -35,7 +36,7 @@ header {
 }
 
 #sidebarA {
-	height: calc(100% - 60px);
+	height: calc(100% - 40px);
 	width: 50%;
 	height: 100%;
 	background-color: white;
@@ -50,7 +51,7 @@ header {
 }
 
 #sidebarB {
-	height: calc(100% - 60px);
+	height: calc(100% - 40px);
 	width: 50%;
 	height: 100%;
 	background-color: white;
