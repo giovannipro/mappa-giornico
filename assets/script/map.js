@@ -156,30 +156,32 @@ function make_map(data){
         sidebarA_container.innerHTML += sContent;
     });
 
-    function highlight_marker(){
-        reset_icon_color()
-
-        let the_id = event.target.dataset.id
-        let the_name = event.target.dataset.name
-        // console.log(the_name,the_id)
-
-        const the_marker = markers[the_id - 1]; 
-        the_marker.setIcon(activeIcon);
-    }
 
     // add buttons
     const buttons = document.querySelectorAll(".button");
     for (let i = 0; i < buttons.length; i++) {
-        
+
         (function(i) {
             buttons[i].addEventListener("click", function(){
                 update_sidebarB(i + 1)
             })
         })(i);
 
-        buttons[i].addEventListener("click", highlight_marker)
+        // buttons[i].addEventListener("click", updateState)
+        // buttons[i].addEventListener("click", highlight_marker)
         buttons[i].addEventListener("click", set_url_param)
     }
+}
+
+function highlight_marker(id){
+    reset_icon_color()
+
+    // let the_id = event.target.dataset.id
+    // let the_name = event.target.dataset.name
+    // console.log(the_name,the_id)
+
+    const the_marker = markers[id - 1]; 
+    the_marker.setIcon(activeIcon);
 }
 
 function reset_icon_color(){
@@ -193,7 +195,7 @@ function update_sidebarB(id){
 
     the_id = id
     selectedData = map_data[the_id - 1]
-    console.log(id,currentState, map_data)
+    // console.log(id,currentState, map_data)
 
     id = selectedData['id']
     name = selectedData['name'] 
@@ -226,6 +228,8 @@ function update_sidebarB(id){
     else {
         set_view(lat,lon,default_zoom)
     }
+
+    highlight_marker(id)
 }
 
 function set_view(lat,lon, zoom){
@@ -247,54 +251,6 @@ function updateState(){
 
     update_sidebarB(myId)
 }
-
-// function retriveData(){
-// }
-//     if (currentState == STATE_A){
-//         upData = {
-//             my_id: 1,
-//             my_data: map_data[1 - 1]
-//         }
-//     }
-//     else {
-//         upData = {
-//             my_id: the_id,
-//             my_data: map_data[the_id - 1] 
-
-//         }
-//     }
-//     console.log(upData)
-//     return upData
-
-// function get_url_id() {
-//     const queryString = window.location.search;
-//     const urlParams = new URLSearchParams(queryString);
-//     const the_id = urlParams.get('id')
-
-//     return the_id;
-// }
-
-
-// function get_id(){
-//     const queryString = window.location.search;
-//     const urlParams = new URLSearchParams(queryString);
-//     let the_id = urlParams.get('id')
-//     let start_id = 1;
-//     let currentState = '';
-
-//     if (the_id !== null){
-//         currentState = STATE_B;
-//         start_id = the_id;
-//         console.log(the_id, start_id)
-//     }
-//     else {
-//         currentState = STATE_A;
-//         start_id = 1;
-//     }
-    
-//     console.log(currentState,start_id)
-//     // update_sidebarB()
-// }
 
 function set_url_param() {
     let id = this.getAttribute('data-id')
