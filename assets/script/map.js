@@ -52,7 +52,9 @@ function load_data(){
             
             map_data = data
             make_map(data)
-            // console.log(data)
+        })
+        .then((data) => {
+            get_url_param();
         })
         .catch(error => {
             console.error('Error fetching JSON data:', error);
@@ -111,20 +113,17 @@ function make_map(data){
     }
 }
 
-function update_sidebarB(){
-    // console.log(currentId)
+function update_sidebarB(the_id){
 
-    // if (currentId != 0){
-    // }
-    // else {
-    //     const queryString = window.location.search;
-    //     const urlParams = new URLSearchParams(queryString);
-    //     id = urlParams.get('id')
-    // }
+    myid = 1;
+    if (the_id > 0){
+        myid = the_id
+    }
+    else {
+        myid = this.getAttribute('data-id')
+    }
 
-    myid = this.getAttribute('data-id')
     selectedData = map_data[myid - 1]
-    // console.log(myid,selectedData)
 
     id = selectedData['id']
     name = selectedData['name'] 
@@ -134,7 +133,6 @@ function update_sidebarB(){
     description = selectedData['description']
     curiosity = selectedData['curiosity']
     senses = selectedData['senses']
-
     
     let content = ''
     content += '<li aria-label="Didascalia immagine">' + '<div id="cover" style="background-image: url(' + images[myid] + ')">' + '</div>'
@@ -158,10 +156,14 @@ function set_view(lat,lon){
     map.setView([lat, lon], default_zoom+1);
 }
 
-function get_url_param(lat,lon){
+function get_url_param(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const location = urlParams.get('l')
+    let the_id = urlParams.get('id')
+
+    if (the_id !== null){
+        update_sidebarB(the_id)
+    }
 }
 
 function set_url_param() {
@@ -171,7 +173,7 @@ function set_url_param() {
 
     // set location
     let newParams = {
-        // id: id, 
+        id: id, 
         lo: name
     };
       
