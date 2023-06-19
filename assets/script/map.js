@@ -6,10 +6,19 @@ let max_zoom = 19;
 let map_center = [46.4019, 8.8752];
 let map_data;
 
+const markers = [];
+
 const map = L.map(map_container, {
     center: map_center,
     zoom: default_zoom
 });
+
+// state machine
+const STATE_A = 'stateA'; // open the general map
+const STATE_B = 'stateB'; // open a specific location
+const STATE_C = 'stateC'; // click on a button
+let currentState;
+let myId = 1; 
 
 // Marker icons
 let defaultIcon = L.icon({
@@ -75,7 +84,8 @@ function load_data(){
             map_data = data
             make_map(data)
 
-            get_url_param();
+            updateState()
+            // update_sidebarB()
         })
         .catch(error => {
             console.error('Error fetching JSON data:', error);
@@ -107,7 +117,6 @@ function make_map(data){
     // console.log(data)
         
     // load markers
-    const markers = [];
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
@@ -147,15 +156,6 @@ function make_map(data){
         sidebarA_container.innerHTML += sContent;
     });
 
-    // select all markers
-    function reset_icon_color(){
-        markers.forEach(marker => {
-            const markerElement = marker.getElement();
-
-            marker.setIcon(defaultIcon)
-        });
-    }
-
     function highlight_marker(){
         reset_icon_color()
 
@@ -167,28 +167,33 @@ function make_map(data){
         the_marker.setIcon(activeIcon);
     }
 
-
     // add buttons
     const buttons = document.querySelectorAll(".button");
     for (let i = 0; i < buttons.length; i++) {
-        buttons[i].addEventListener("click", update_sidebarB)
+        
+        (function(i) {
+            buttons[i].addEventListener("click", function(){
+                update_sidebarB(i + 1)
+            })
+        })(i);
+
         buttons[i].addEventListener("click", highlight_marker)
         buttons[i].addEventListener("click", set_url_param)
     }
 }
 
-function update_sidebarB(the_id){
+function reset_icon_color(){
+    markers.forEach(marker => {
+        const markerElement = marker.getElement();
+        marker.setIcon(defaultIcon)
+    });
+}
 
-    myid = 0;
-    if (the_id > 0){
-        myid = the_id
-    }
-    else {
-        myid = this.getAttribute('data-id')
-    }
+function update_sidebarB(id){
 
-    selectedData = map_data[myid - 1]
-    // console.log(selectedData)
+    the_id = id
+    selectedData = map_data[the_id - 1]
+    console.log(id,currentState, map_data)
 
     id = selectedData['id']
     name = selectedData['name'] 
@@ -200,7 +205,7 @@ function update_sidebarB(the_id){
     senses = selectedData['senses']
     
     let content = ''
-    content += '<li aria-label="Didascalia immagine">' + '<div id="cover" style="background-image: url(' + images[myid] + ')">' + '</div>'
+    content += '<li aria-label="Didascalia immagine">' + '<div id="cover" style="background-image: url(' + images[the_id] + ')">' + '</div>'
     content += '<li aria-label="Id">' + id + '</li>'
     content += '<li aria-label="Nome">' + '<h3>' + name + '</h3></li>'
     content += '<li aria-label="Latitudine">' + lat + '</li>'
@@ -214,23 +219,82 @@ function update_sidebarB(the_id){
     content += '<li aria-label="Longitudine">' + senses + '</li>'
     sidebarB_container.innerHTML = content;
 
-    set_view(lat,lon)
+    // set the view
+    if (currentState == STATE_A){
+        set_view(map_center[0], map_center[1], default_zoom - 2)
+    }
+    else {
+        set_view(lat,lon,default_zoom)
+    }
 }
 
-function set_view(lat,lon){
-    map.setView([lat, lon], default_zoom+1);
+function set_view(lat,lon, zoom){
+    map.setView([lat, lon], zoom+1);
 }
 
-function get_url_param(){
+function updateState(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     let the_id = urlParams.get('id')
-    // console.log(the_id)
 
     if (the_id !== null){
-        update_sidebarB(the_id)
+        currentState = STATE_B;
+        myId = the_id
     }
+    else {
+        currentState = STATE_A;
+    }
+
+    update_sidebarB(myId)
 }
+
+// function retriveData(){
+// }
+//     if (currentState == STATE_A){
+//         upData = {
+//             my_id: 1,
+//             my_data: map_data[1 - 1]
+//         }
+//     }
+//     else {
+//         upData = {
+//             my_id: the_id,
+//             my_data: map_data[the_id - 1] 
+
+//         }
+//     }
+//     console.log(upData)
+//     return upData
+
+// function get_url_id() {
+//     const queryString = window.location.search;
+//     const urlParams = new URLSearchParams(queryString);
+//     const the_id = urlParams.get('id')
+
+//     return the_id;
+// }
+
+
+// function get_id(){
+//     const queryString = window.location.search;
+//     const urlParams = new URLSearchParams(queryString);
+//     let the_id = urlParams.get('id')
+//     let start_id = 1;
+//     let currentState = '';
+
+//     if (the_id !== null){
+//         currentState = STATE_B;
+//         start_id = the_id;
+//         console.log(the_id, start_id)
+//     }
+//     else {
+//         currentState = STATE_A;
+//         start_id = 1;
+//     }
+    
+//     console.log(currentState,start_id)
+//     // update_sidebarB()
+// }
 
 function set_url_param() {
     let id = this.getAttribute('data-id')
