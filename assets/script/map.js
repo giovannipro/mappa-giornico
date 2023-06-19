@@ -167,18 +167,12 @@ function make_map(data){
             })
         })(i);
 
-        // buttons[i].addEventListener("click", updateState)
-        // buttons[i].addEventListener("click", highlight_marker)
         buttons[i].addEventListener("click", set_url_param)
     }
 }
 
 function highlight_marker(id){
     reset_icon_color()
-
-    // let the_id = event.target.dataset.id
-    // let the_name = event.target.dataset.name
-    // console.log(the_name,the_id)
 
     const the_marker = markers[id - 1]; 
     the_marker.setIcon(activeIcon);
@@ -195,7 +189,6 @@ function update_sidebarB(id){
 
     the_id = id
     selectedData = map_data[the_id - 1]
-    // console.log(id,currentState, map_data)
 
     id = selectedData['id']
     name = selectedData['name'] 
@@ -207,18 +200,29 @@ function update_sidebarB(id){
     senses = selectedData['senses']
     
     let content = ''
-    content += '<li aria-label="Didascalia immagine">' + '<div id="cover" style="background-image: url(' + images[the_id] + ')">' + '</div>'
-    content += '<li aria-label="Id">' + id + '</li>'
-    content += '<li aria-label="Nome">' + '<h3>' + name + '</h3></li>'
-    content += '<li aria-label="Latitudine">' + lat + '</li>'
-    content += '<li aria-label="Longitudine">' + lon + '</li>'
-    content += '<br/>'
 
-    content += '<li aria-label="Descrizione">' + abstract + '</li>'
-    content += '<br/>'
-    content += '<li aria-label="Longitudine">' + description + '</li>'
-    content += '<li aria-label="Longitudine">' + curiosity + '</li>'
-    content += '<li aria-label="Longitudine">' + senses + '</li>'
+    // cover
+    content += '<div id="cover" aria-label="Didascalia immagine">'
+    content += '<div style="background-image: url(' + images[the_id] + ')">' + '</div>'
+        
+    content += '<div aria-label="Nome">' + '<h3>' + name + '</h3></div></div>'
+
+    // content
+    content += '<div id="content">'
+    content += '<div class="info"><p>Storia</p>'
+    content += '<p>' + abstract + '</p></div>'
+
+    content += '<div class="info"><p>Descrizione</p>'
+    content += '<p>' + description + '</p></div>'
+
+    content += '<div class="info"><p>Curiosità</p>'
+    content += '<p>' + curiosity + '</p></div>'
+
+    content += '<div class="info"><p>Esperienza sensoriale</p>'
+    content += '<p>' + senses + '</p></div>'
+
+    content += '<div>'
+
     sidebarB_container.innerHTML = content;
 
     // set the view
@@ -257,17 +261,16 @@ function set_url_param() {
     let name = this.getAttribute('data-short')
     const newURL = new URL(window.location.href);
 
-    // set location
     let newParams = {
         id: id, 
         lo: name
     };
       
-    // Update or add the parameters to the URL
+    // update or add the parameters to the URL
     Object.keys(newParams).forEach(key => {
         newURL.searchParams.set(key, newParams[key]);
     });
 
-    // Replace the current URL without refreshing the page
+    // replace the current URL without refreshing the page
     window.history.replaceState({}, '', newURL);
 }
