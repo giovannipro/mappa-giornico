@@ -118,7 +118,7 @@ function make_map(data){
         const marker = L.marker([lat, lon],{
             alt: name,
             icon: defaultIcon,
-            className: "a"
+            className: name
         })
         .bindPopup(name)
         .on('mouseover', function () {
@@ -156,10 +156,23 @@ function make_map(data){
         });
     }
 
+    function highlight_marker(){
+        reset_icon_color()
+
+        let the_id = event.target.dataset.id
+        let the_name = event.target.dataset.name
+        // console.log(the_name,the_id)
+
+        const the_marker = markers[the_id - 1]; 
+        the_marker.setIcon(activeIcon);
+    }
+
+
     // add buttons
     const buttons = document.querySelectorAll(".button");
     for (let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", update_sidebarB)
+        buttons[i].addEventListener("click", highlight_marker)
         buttons[i].addEventListener("click", set_url_param)
     }
 }
@@ -175,7 +188,7 @@ function update_sidebarB(the_id){
     }
 
     selectedData = map_data[myid - 1]
-    console.log(selectedData)
+    // console.log(selectedData)
 
     id = selectedData['id']
     name = selectedData['name'] 
