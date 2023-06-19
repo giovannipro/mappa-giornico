@@ -99,7 +99,7 @@ function make_map(data){
         .addTo(map)
         .bindPopup(name);
 
-        sContent = '<li class="button" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '">' + name + '</li>'
+        sContent = '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
         sidebarA_container.innerHTML += sContent;
     });
 
@@ -133,14 +133,14 @@ function update_sidebarB(){
     abstract = selectedData['abstract']
     
     let content = ''
-    content += '<li>' + '<div id="cover" style="background-image: url(' + images[myid] + ')">' + '</div>'
-    content += '<li>' + id + '</li>'
-    content += '<li>' + name + '</li>'
-    content += '<li>' + lat + '</li>'
-    content += '<li>' + lon + '</li>'
+    content += '<li tabindex="' + 0 + '" aria-label="Didascalia immagine">' + '<div id="cover" style="background-image: url(' + images[myid] + ')">' + '</div>'
+    content += '<li tabindex="' + 0 + '" aria-label="Id">' + id + '</li>'
+    content += '<li tabindex="' + 0 + '" aria-label="Nome">' + '<h3>' + name + '</h3></li>'
+    content += '<li tabindex="' + 0 + '" aria-label="Latitudine">' + lat + '</li>'
+    content += '<li tabindex="' + 0 + '" aria-label="Longitudine">' + lon + '</li>'
     content += '<br/>'
 
-    content += '<li>' + abstract + '</li>'
+    content += '<li tabindex="' + 0 + '" aria-label="Descrizione">' + abstract + '</li>'
     sidebarB_container.innerHTML = content;
 
     set_view(lat,lon)

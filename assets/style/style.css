@@ -8,7 +8,7 @@ header {
 	background-color: white;
 }
 
-main {
+#main {
 	height: calc(100vh - 60px);
 	display: flex;
 /*	overflow: hidden;*/
@@ -26,6 +26,7 @@ main {
 .sidebar{
 	border-right: 1px solid #ccc;
 	overflow-y: scroll;
+	position: relative;
 }
 
 #sidebars {
@@ -40,10 +41,12 @@ main {
 	background-color: white;
 }
 
-#sidebarA_content li{
+#sidebarA_content button {
 	border-bottom: 1px solid #ccc;
 	padding: 0.5rem;
 	cursor: pointer;
+	width: 100%;
+	text-align: left;
 }
 
 #sidebarB {
@@ -81,7 +84,7 @@ main {
 
 @media only screen and (max-width: 750px) {
 
-	main {
+	#main {
   		-webkit-flex-direction: column-reverse; 
   		flex-direction: column-reverse;
   		height: auto;

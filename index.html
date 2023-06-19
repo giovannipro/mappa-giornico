@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="it">
 	<head>
 		<meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
 		<title>Mappa Giornico</title>
@@ -23,17 +23,17 @@
 				</a>
 			</h2>
 		</header>
-		<main>
-			<section id="sidebars">
+		<div aria-label="Mappa di Giornico" id="main">
+			<aside id="sidebars" role="navigation">
 				<div id="sidebarA" class="sidebar">
 					<ul id="sidebarA_content"></ul>
 				</div>
 				<div id="sidebarB" class="sidebar">
-					<ul id="sidebarB_content"></ul>
+					<ul id="sidebarB_content" role="text"></ul>
 				</div>
-			</section>
-			<div id="map_container"></div>
-		</main>
+			</aside>
+			<main id="map_container"></main>
+		</div>
 		
 		<script src="assets/script/map.js"></script>
 		<script src="assets/script/script.js"></script>
