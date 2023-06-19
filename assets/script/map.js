@@ -93,8 +93,11 @@ function make_map(data){
         const lon = item.longitude;
         const short = item.short_name;
 
-        const marker = L.marker([lat, lon]).addTo(map);
-        marker.bindPopup(name);
+        const marker = L.marker([lat, lon],
+            {alt: name}
+        )
+        .addTo(map)
+        .bindPopup(name);
 
         sContent = '<li class="button" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '">' + name + '</li>'
         sidebarA_container.innerHTML += sContent;
