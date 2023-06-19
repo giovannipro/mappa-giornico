@@ -87,7 +87,7 @@ function make_map(data){
     })
     console.log(data)
         
-    // load marker
+    // load markers
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
@@ -98,12 +98,30 @@ function make_map(data){
         const marker = L.marker([lat, lon],
             {alt: name}
         )
+        .bindPopup(name)
+        .on('mouseover', function () {
+            this.openPopup()
+        })
+        .on('mouseout', function () {
+            this.closePopup()
+        })
         .addTo(map)
-        .bindPopup(name);
+        
+        // on click: open sidebar B
+        marker.on('click', function () {
+            update_sidebarB(id)
+        })
+
+        // on mouse hover show pop up
+        marker.on('mouseover', function () {
+            this.bindPopup(name)
+        })
 
         sContent = '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
         sidebarA_container.innerHTML += sContent;
     });
+
+
 
     // add buttons
     const buttons = document.querySelectorAll(".button");
@@ -114,6 +132,7 @@ function make_map(data){
 }
 
 function update_sidebarB(the_id){
+    console.log(the_id)
 
     myid = 1;
     if (the_id > 0){
