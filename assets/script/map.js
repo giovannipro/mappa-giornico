@@ -11,6 +11,28 @@ const map = L.map(map_container, {
     zoom: default_zoom
 });
 
+// Marker icons
+let defaultIcon = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-blue.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+    className: ""
+});
+
+let activeIcon = L.icon({
+    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+    iconSize: [25, 41],
+    iconAnchor: [12, 41],
+    popupAnchor: [1, -34],
+    shadowSize: [41, 41],
+    className: ""
+});
+
+
 let currentId = 0;
 
 const images = [
@@ -88,6 +110,7 @@ function make_map(data){
     console.log(data)
         
     // load markers
+    const markers = [];
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
@@ -95,9 +118,11 @@ function make_map(data){
         const lon = item.longitude;
         const short = item.short_name;
 
-        const marker = L.marker([lat, lon],
-            {alt: name}
-        )
+        const marker = L.marker([lat, lon],{
+            alt: name,
+            icon: defaultIcon,
+            className: "a"
+        })
         .bindPopup(name)
         .on('mouseover', function () {
             this.openPopup()
@@ -110,6 +135,9 @@ function make_map(data){
         // on click: open sidebar B
         marker.on('click', function () {
             update_sidebarB(id)
+            
+            reset_icon_color();
+            this.setIcon(activeIcon);
         })
 
         // on mouse hover show pop up
@@ -117,10 +145,21 @@ function make_map(data){
             this.bindPopup(name)
         })
 
+        markers.push(marker);
+
         sContent = '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
         sidebarA_container.innerHTML += sContent;
     });
 
+    // select all markers
+    function reset_icon_color(){
+        markers.forEach(marker => {
+            const markerElement = marker.getElement();
+
+            marker.setIcon(defaultIcon)
+        });
+        console.log("aa")
+    }
 
 
     // add buttons
