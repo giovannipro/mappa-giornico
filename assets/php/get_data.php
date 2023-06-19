@@ -34,7 +34,9 @@
 	}
 	echo $json;
 
-	header('Content-Type: application/json');
+	if ($url != "localhost:8888") {
+		header('Content-Type: application/json');
+	}
 
 	mysqli_close($conn);
 

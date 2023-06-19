@@ -131,16 +131,24 @@ function update_sidebarB(){
     lat = selectedData['latitude']
     lon = selectedData['longitude']
     abstract = selectedData['abstract']
+    description = selectedData['description']
+    curiosity = selectedData['curiosity']
+    senses = selectedData['senses']
+
     
     let content = ''
-    content += '<li tabindex="' + 0 + '" aria-label="Didascalia immagine">' + '<div id="cover" style="background-image: url(' + images[myid] + ')">' + '</div>'
-    content += '<li tabindex="' + 0 + '" aria-label="Id">' + id + '</li>'
-    content += '<li tabindex="' + 0 + '" aria-label="Nome">' + '<h3>' + name + '</h3></li>'
-    content += '<li tabindex="' + 0 + '" aria-label="Latitudine">' + lat + '</li>'
-    content += '<li tabindex="' + 0 + '" aria-label="Longitudine">' + lon + '</li>'
+    content += '<li aria-label="Didascalia immagine">' + '<div id="cover" style="background-image: url(' + images[myid] + ')">' + '</div>'
+    content += '<li aria-label="Id">' + id + '</li>'
+    content += '<li aria-label="Nome">' + '<h3>' + name + '</h3></li>'
+    content += '<li aria-label="Latitudine">' + lat + '</li>'
+    content += '<li aria-label="Longitudine">' + lon + '</li>'
     content += '<br/>'
 
-    content += '<li tabindex="' + 0 + '" aria-label="Descrizione">' + abstract + '</li>'
+    content += '<li aria-label="Descrizione">' + abstract + '</li>'
+    content += '<br/>'
+    content += '<li aria-label="Longitudine">' + description + '</li>'
+    content += '<li aria-label="Longitudine">' + curiosity + '</li>'
+    content += '<li aria-label="Longitudine">' + senses + '</li>'
     sidebarB_container.innerHTML = content;
 
     set_view(lat,lon)
