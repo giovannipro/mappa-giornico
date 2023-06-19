@@ -74,15 +74,12 @@ function load_data(){
             
             map_data = data
             make_map(data)
-        })
-        .then((data) => {
+
             get_url_param();
         })
         .catch(error => {
             console.error('Error fetching JSON data:', error);
         });
-
-    get_url_param();
 }
 
 function make_map(data){
@@ -107,7 +104,7 @@ function make_map(data){
 
         item.short_name = shortD
     })
-    console.log(data)
+    // console.log(data)
         
     // load markers
     const markers = [];
@@ -135,7 +132,6 @@ function make_map(data){
         // on click: open sidebar B
         marker.on('click', function () {
             update_sidebarB(id)
-            
             reset_icon_color();
             this.setIcon(activeIcon);
         })
@@ -158,9 +154,7 @@ function make_map(data){
 
             marker.setIcon(defaultIcon)
         });
-        console.log("aa")
     }
-
 
     // add buttons
     const buttons = document.querySelectorAll(".button");
@@ -171,9 +165,8 @@ function make_map(data){
 }
 
 function update_sidebarB(the_id){
-    console.log(the_id)
 
-    myid = 1;
+    myid = 0;
     if (the_id > 0){
         myid = the_id
     }
@@ -182,6 +175,7 @@ function update_sidebarB(the_id){
     }
 
     selectedData = map_data[myid - 1]
+    console.log(selectedData)
 
     id = selectedData['id']
     name = selectedData['name'] 
@@ -218,6 +212,7 @@ function get_url_param(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     let the_id = urlParams.get('id')
+    // console.log(the_id)
 
     if (the_id !== null){
         update_sidebarB(the_id)
