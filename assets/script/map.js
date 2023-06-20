@@ -5,6 +5,7 @@ let default_zoom = 16;
 let max_zoom = 19;
 let map_center = [46.4019, 8.8752];
 let map_data;
+let sidebar_content;
 
 const markers = [];
 
@@ -45,15 +46,7 @@ let activeIcon = L.icon({
 let currentId = 0;
 
 const images = [
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/9/95/Hubble_captures_crisp_new_image_of_Jupiter_and_Europa_%2850354436493%29.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/0/02/OSIRIS_Mars_true_color.jpg",
-    "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/FullMoon2010.jpg/1920px-FullMoon2010.jpg"
+    'assets/imgs/museo-leventina_1.jpg', 
 ]
 
 // sidebar
@@ -117,7 +110,7 @@ function make_map(data){
     })
         
     // load markers
-    let content = '';
+    sidebar_content = '';
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
@@ -154,10 +147,10 @@ function make_map(data){
 
         markers.push(marker);
 
-        content += '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
+        sidebar_content += '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
     });
 
-    update_sidebarA(content)
+    update_sidebarA(sidebar_content)
     activeButtons();
 }
 
@@ -199,7 +192,8 @@ function update_sidebarA(content){
 }
 
 function update_sidebarB(id){
-    the_id = id
+
+    the_id = parseInt(id)
     selectedData = map_data[the_id - 1]
 
     id = selectedData['id']
@@ -207,6 +201,7 @@ function update_sidebarB(id){
     lat = selectedData['latitude']
     lon = selectedData['longitude']
     abstract = selectedData['abstract']
+    period = selectedData['period']
     description = selectedData['description']
     curiosity = selectedData['curiosity']
     senses = selectedData['senses']
@@ -215,9 +210,17 @@ function update_sidebarB(id){
 
     // cover
     content += '<div id="cover" aria-label="Didascalia immagine">'
-    content += '<div style="background-image: url(' + images[the_id] + ')">' + '</div>'
-        
-    content += '<div aria-label="Nome">' + '<h3>' + name + '</h3></div></div>'
+    // content += '<div style="background-image: url(' + images[the_id] + '), url(' + images[the_id + 1] + ')">' + '</div>'
+    content += '<div id="cover_image">'
+    content += '<img alt="img_1" src="' + images[0] +'">' + '</img>'
+    content += '<img alt="img_1" src="' + images[0] +'">' + '</img>'
+    content += '<img alt="img_1" src="' + images[0] +'">' + '</img>'
+    content += '</div>'
+
+    content += '<div id="location_header">'
+    content += '<div aria-label="nome">' + '<h3>' + name + '</h3></div>'
+    content += '<div aria-label="periodo">' +  period + '</div></div>'
+    content += '</div>'
 
     // content
     content += '<div id="content">'
@@ -258,23 +261,25 @@ function update_sidebarC(content,sidebar){
 
         the_content += '<div id="close_sidebarB">x</div>'
         the_content += content
-    
-        // let close_sidebarB = document.getElementById("close_sidebarB");
-        // console.log(close_sidebarB)
+        sidebarC_container.innerHTML = the_content;
 
-        // // close_sidebarB.addEventListener("click", close);
-    
-        // function close(){
-        //     // update_sidebarA(content)
-        // }
+        closeSidebar()
     }
     else {
-        the_content = content
+        the_content = content;
+        sidebarC_container.innerHTML = the_content;
     }
+}
 
-    sidebarC_container.innerHTML = the_content;
+function closeSidebar() {
 
+    let close = document.getElementById('close_sidebarB')
 
+    close.addEventListener('click', function() {
+        sidebarC_container.id = 'sidebarA_content'
+        sidebarC_container.innerHTML = sidebar_content;
+        activeButtons()
+    })
 }
 
 function set_view(lat,lon, zoom){
@@ -299,7 +304,6 @@ function updateState(){
 
 function set_url_param(id,name) {
 
-    // let name = this.getAttribute('data-short')
     const newURL = new URL(window.location.href);
 
     let newParams = {
