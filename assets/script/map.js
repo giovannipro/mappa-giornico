@@ -83,8 +83,8 @@ function load_data(){
             
             map_data = data
             make_map(data)
-
             updateState()
+
             // update_sidebarB()
         })
         .catch(error => {
@@ -160,12 +160,14 @@ function make_map(data){
 }
 
 function activeButtons(){
+
     const buttons = document.querySelectorAll(".button");
     for (let i = 0; i < buttons.length; i++) {
 
+
         (function(i) {
             buttons[i].addEventListener("click", function(){
-                update_sidebarB(i + 1);
+                update_sidebarB(i + 1)
             
                 // update url
                 let the_id = (buttons[i].getAttribute('data-id')).toString()
@@ -233,6 +235,7 @@ function update_sidebarB(id){
     // set the view
     if (currentState == STATE_A){
         set_view(map_center[0], map_center[1], default_zoom - 2)
+        currentState = STATE_B
     }
     else {
         set_view(lat,lon,default_zoom)
