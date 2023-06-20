@@ -269,18 +269,19 @@ function update_sidebarC(content,sidebar){
         the_content = content;
         sidebarC_container.innerHTML = the_content;
     }
+    
+    function closeSidebar() {
+
+        let close = document.getElementById('close_sidebarB')
+
+        close.addEventListener('click', function() {
+            sidebarC_container.id = 'sidebarA_content'
+            sidebarC_container.innerHTML = sidebar_content;
+            activeButtons()
+        })
+    }
 }
 
-function closeSidebar() {
-
-    let close = document.getElementById('close_sidebarB')
-
-    close.addEventListener('click', function() {
-        sidebarC_container.id = 'sidebarA_content'
-        sidebarC_container.innerHTML = sidebar_content;
-        activeButtons()
-    })
-}
 
 function set_view(lat,lon, zoom){
     map.setView([lat, lon], zoom+1);
