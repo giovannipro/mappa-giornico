@@ -114,7 +114,6 @@ function make_map(data){
 
         item.short_name = shortD
     })
-    // console.log(data)
         
     // load markers
     data.forEach(item => {
@@ -143,6 +142,7 @@ function make_map(data){
             update_sidebarB(id)
             reset_icon_color();
             this.setIcon(activeIcon);
+            set_url_param(id,name)
         })
 
         // on mouse hover show pop up
@@ -156,18 +156,23 @@ function make_map(data){
         sidebarA_container.innerHTML += sContent;
     });
 
+    activeButtons();
+}
 
-    // add buttons
+function activeButtons(){
     const buttons = document.querySelectorAll(".button");
     for (let i = 0; i < buttons.length; i++) {
 
         (function(i) {
             buttons[i].addEventListener("click", function(){
-                update_sidebarB(i + 1)
+                update_sidebarB(i + 1);
+            
+                // update url
+                let the_id = (buttons[i].getAttribute('data-id')).toString()
+                let the_name = (buttons[i].getAttribute('data-name')).toString()
+                set_url_param(the_id,the_name)
             })
         })(i);
-
-        buttons[i].addEventListener("click", set_url_param)
     }
 }
 
@@ -256,9 +261,10 @@ function updateState(){
     update_sidebarB(myId)
 }
 
-function set_url_param() {
-    let id = this.getAttribute('data-id')
-    name = map_data[id - 1].name
+function set_url_param(id,name) {
+    // console.log(id,name)
+    // let id = this.getAttribute('data-id')
+    // name = map_data[id - 1].name
 
     // let name = this.getAttribute('data-short')
     const newURL = new URL(window.location.href);
