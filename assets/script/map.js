@@ -243,10 +243,12 @@ function update_sidebarB(id){
         currentState = STATE_B
     }
     else {
+        update_sidebarC(content)
         set_view(lat,lon,default_zoom)
+        // sidebarC_container.style.height = '1000px'
+
     }
 
-    // update_sidebarC(content)
     highlight_marker(id)
 }
 
