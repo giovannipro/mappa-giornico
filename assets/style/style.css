@@ -49,6 +49,10 @@ header {
 	background-color: white;
 }
 
+#sidebarC {
+	display: none;
+}
+
 #sidebarA_content button {
 	border-bottom: 1px solid #ccc;
 	height: 50px;
@@ -69,7 +73,7 @@ header {
 #cover div:nth-child(2) {
 	border-bottom: 1px solid #ccc;
 	height: 50px;
-	padding: 1.5rem 0.5rem;
+	padding: 1rem 0.5rem;
 }
 
 #content {
@@ -96,7 +100,7 @@ header {
 
 /* - responsive - */
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 768px) {
 
 	#main {
   		-webkit-flex-direction: column-reverse; 
@@ -114,7 +118,16 @@ header {
   		width: 100vw;
   	}
 
+  	#sidebarA, #sidebarB  {
+		display: none;
+	}
 
+  	#sidebarC {
+  		display: block;
+		width: 100%;
+		height: 40vh;
+		background-color: white;
+	}
 
 
 }

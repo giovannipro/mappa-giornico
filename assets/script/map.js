@@ -59,6 +59,7 @@ const images = [
 // sidebar
 const sidebarA_container = document.getElementById("sidebarA_content");
 const sidebarB_container = document.getElementById("sidebarB_content");
+const sidebarC_container = document.getElementById("sidebarC_content");
 
 function load_data(){
     let data_link = "assets/php/get_data.php";
@@ -116,6 +117,7 @@ function make_map(data){
     })
         
     // load markers
+    let content = '';
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
@@ -152,10 +154,10 @@ function make_map(data){
 
         markers.push(marker);
 
-        sContent = '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
-        sidebarA_container.innerHTML += sContent;
+        content += '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
     });
 
+    update_sidebarA(content)
     activeButtons();
 }
 
@@ -164,10 +166,9 @@ function activeButtons(){
     const buttons = document.querySelectorAll(".button");
     for (let i = 0; i < buttons.length; i++) {
 
-
         (function(i) {
             buttons[i].addEventListener("click", function(){
-                update_sidebarB(i + 1)
+                update_sidebarB(this.getAttribute('data-id'))
             
                 // update url
                 let the_id = (buttons[i].getAttribute('data-id')).toString()
@@ -192,8 +193,12 @@ function reset_icon_color(){
     });
 }
 
-function update_sidebarB(id){
+function update_sidebarA(content){
+    sidebarA_container.innerHTML = content;
+    update_sidebarC(content)
+}
 
+function update_sidebarB(id){
     the_id = id
     selectedData = map_data[the_id - 1]
 
@@ -241,7 +246,13 @@ function update_sidebarB(id){
         set_view(lat,lon,default_zoom)
     }
 
+    // update_sidebarC(content)
     highlight_marker(id)
+}
+
+function update_sidebarC(content){
+    sidebarC_container.id = 'sidebarA_content'
+    sidebarC_container.innerHTML = content;
 }
 
 function set_view(lat,lon, zoom){
