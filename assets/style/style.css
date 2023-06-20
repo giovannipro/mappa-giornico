@@ -74,7 +74,7 @@ header {
 #cover div:nth-child(2) {
 	border-bottom: 1px solid #ccc;
 	height: 50px;
-	padding: 1rem 0.5rem;
+	padding: 1.5rem 0.5rem;
 }
 
 #content {
@@ -123,8 +123,6 @@ header {
   		height: calc(60vh - 40px - 1rem);
   		width: 100vw;
   		top: 0px;
-/*  		position: fixed;*/
-/*  		z-index: 0;*/
   	}
 
   	#sidebarA, #sidebarB  {
@@ -138,6 +136,14 @@ header {
 		background-color: white;
 	}
 
+	#close_sidebarB {
+		width: 40px;
+		height: 40px;
+		position: absolute;
+		top: 20px;
+		left: 80vw;
+		background-color: white;
+	}
 
 }
 

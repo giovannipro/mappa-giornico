@@ -195,7 +195,7 @@ function reset_icon_color(){
 
 function update_sidebarA(content){
     sidebarA_container.innerHTML = content;
-    update_sidebarC(content)
+    update_sidebarC(content, 'A')
 }
 
 function update_sidebarB(id){
@@ -243,18 +243,38 @@ function update_sidebarB(id){
         currentState = STATE_B
     }
     else {
-        update_sidebarC(content)
+        update_sidebarC(content, 'B')
         set_view(lat,lon,default_zoom)
-        // sidebarC_container.style.height = '1000px'
-
     }
 
     highlight_marker(id)
 }
 
-function update_sidebarC(content){
-    sidebarC_container.id = 'sidebarA_content'
-    sidebarC_container.innerHTML = content;
+function update_sidebarC(content,sidebar){
+    sidebarC_container.id = 'sidebar' + sidebar + '_content'
+
+    let the_content = '';
+    if (sidebar == 'B'){
+
+        the_content += '<div id="close_sidebarB">x</div>'
+        the_content += content
+    
+        // let close_sidebarB = document.getElementById("close_sidebarB");
+        // console.log(close_sidebarB)
+
+        // // close_sidebarB.addEventListener("click", close);
+    
+        // function close(){
+        //     // update_sidebarA(content)
+        // }
+    }
+    else {
+        the_content = content
+    }
+
+    sidebarC_container.innerHTML = the_content;
+
+
 }
 
 function set_view(lat,lon, zoom){
@@ -278,16 +298,13 @@ function updateState(){
 }
 
 function set_url_param(id,name) {
-    // console.log(id,name)
-    // let id = this.getAttribute('data-id')
-    // name = map_data[id - 1].name
 
     // let name = this.getAttribute('data-short')
     const newURL = new URL(window.location.href);
 
     let newParams = {
         id: id, 
-        lo: name
+        loc: name
     };
       
     // update or add the parameters to the URL
