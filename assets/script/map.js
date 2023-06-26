@@ -2,7 +2,7 @@
 const map_container = "map_container";
 let min_zoom = 14;
 let default_zoom = 16;
-let max_zoom = 19;
+let max_zoom = 20;
 let map_center = [46.4019, 8.8752];
 let map_data;
 let sidebar_content;
