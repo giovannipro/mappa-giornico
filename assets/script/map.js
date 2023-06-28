@@ -2,7 +2,7 @@
 const map_container = "map_container";
 let min_zoom = 14;
 let default_zoom = 16;
-let max_zoom = 20;
+let max_zoom = 19;
 let map_center = [46.4019, 8.8752];
 let map_data;
 let sidebar_content;
@@ -61,7 +61,7 @@ const images = [
 const osm_api = 'https://api.openstreetmap.org/api/0.6/map?bbox=-0.111110,51.111110,0.111111,51.111111'
 
 const query_a = '[out:json];area[name="Giornico"]->.searchArea;(way["amenity"~"parking|toilets|public_transport"](area.searchArea););out center;>;out skel qt;'
-const query_b = '[out:json];(way(around:1000,46.4019, 8.8752););out center;' // [amenity]
+const query_b = '[out:json];(way(around:1400,46.4019, 8.8752););out center;' // [amenity]
 const overpass_api = 'https://overpass-api.de/api/interpreter?data=' + query_b
 
 
@@ -98,8 +98,6 @@ function load_data(){
             map_data = data
             make_map(data)
             updateState()
-
-            // update_sidebarB()
         })
         .catch(error => {
             console.error('Error fetching JSON data:', error);
@@ -120,17 +118,14 @@ function make_map(data){
         .then(response => response.json())
         .then(data => {
             elements = data.elements
-            // console.log(elements)
             
             elements.forEach(item => {
 
-                // console.log(item)
                 lat = item.center.lat
                 lon = item.center.lon
-                // name = item.tags.amenity
 
                 if (item.tags){
-                    names = item.tags //  + ' ' + item.tags[1]
+                    names = item.tags
 
                     name = ''
                     Object.keys(names).forEach(function(key) {
@@ -171,6 +166,7 @@ function make_map(data){
         
     // load markers
     sidebar_content = '';
+    let bounds = L.latLngBounds();
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
@@ -206,9 +202,11 @@ function make_map(data){
         })
 
         markers.push(marker);
+        bounds.extend(marker.getLatLng());
 
         sidebar_content += '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
     });
+    map.fitBounds(bounds);
 
     update_sidebarA(sidebar_content)
     activeButtons();
@@ -284,17 +282,17 @@ function update_sidebarB(id){
 
     // content
     content += '<div id="content">'
-    content += '<div class="info"><p>Storia</p>'
-    content += '<p>' + abstract + '</p></div>'
+    content += '<div class="info"><p class="parameter">Storia</p>'
+    content += '<p class="value">' + abstract + '</p></div>'
 
-    content += '<div class="info"><p>Descrizione</p>'
-    content += '<p>' + description + '</p></div>'
+    content += '<div class="info"><p class="parameter">Descrizione</p>'
+    content += '<p class="value">' + description + '</p></div>'
 
-    content += '<div class="info"><p>Curiosità</p>'
-    content += '<p>' + curiosity + '</p></div>'
+    content += '<div class="info"><p class="parameter">Curiosità</p>'
+    content += '<p class="value">' + curiosity + '</p></div>'
 
-    content += '<div class="info"><p>Esperienza sensoriale</p>'
-    content += '<p>' + senses + '</p></div>'
+    content += '<div class="info"><p class="parameter">Esperienza sensoriale</p>'
+    content += '<p class="value">' + senses + '</p></div>'
 
     content += '<div>'
 
