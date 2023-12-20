@@ -121,7 +121,9 @@ header {
 	margin-top: 2rem;
 }
 
-
+.selected {
+	background-color: #e3e3e3;
+}
 
 /* - responsive - */
 

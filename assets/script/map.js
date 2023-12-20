@@ -114,42 +114,43 @@ function make_map(data){
         tileSize: 256
     }).addTo(map);
 
-    fetch(overpass_api)
-        .then(response => response.json())
-        .then(data => {
-            elements = data.elements
+    // overpass data
+    // fetch(overpass_api)
+    //     .then(response => response.json())
+    //     .then(data => {
+    //         elements = data.elements
             
-            elements.forEach(item => {
+    //         elements.forEach(item => {
 
-                lat = item.center.lat
-                lon = item.center.lon
+    //             lat = item.center.lat
+    //             lon = item.center.lon
 
-                if (item.tags){
-                    names = item.tags
+    //             if (item.tags){
+    //                 names = item.tags
 
-                    name = ''
-                    Object.keys(names).forEach(function(key) {
-                        let value = names[key];
-                        name += key + ': ' + value + '<br/>'
-                    });
-                    name += '<br/>' + calculateDistance(lat, lon, 46.4019, 8.8752)
+    //                 name = ''
+    //                 Object.keys(names).forEach(function(key) {
+    //                     let value = names[key];
+    //                     name += key + ': ' + value + '<br/>'
+    //                 });
+    //                 name += '<br/>' + calculateDistance(lat, lon, 46.4019, 8.8752)
 
-                    // if (name !== 'parkinga'){
-                        const marker = L.circle([lat, lon], 2, {
-                            icon: amenityIcon
-                        })
-                        .bindPopup(name)
-                        .on('mouseover', function () {
-                            this.openPopup()
-                        })
-                        .on('mouseout', function () {
-                            this.closePopup()
-                        })
-                        .addTo(map)
-                    // }
-                }
-            })
-    });
+    //                 // if (name !== 'parkinga'){
+    //                     const marker = L.circle([lat, lon], 2, {
+    //                         icon: amenityIcon
+    //                     })
+    //                     .bindPopup(name)
+    //                     .on('mouseover', function () {
+    //                         this.openPopup()
+    //                     })
+    //                     .on('mouseout', function () {
+    //                         this.closePopup()
+    //                     })
+    //                     .addTo(map)
+    //                 // }
+    //             }
+    //         })
+    // });
 
     // fix data
     data.forEach(item => {
@@ -194,7 +195,15 @@ function make_map(data){
             reset_icon_color();
             this.setIcon(activeIcon);
             set_url_param(id,name)
-        })
+
+            buttons = document.querySelectorAll(".button");
+            buttons.forEach(otherButton => {
+                otherButton.classList.remove('selected');
+            })
+        });
+
+
+        // })
 
         // on mouse hover show pop up
         marker.on('mouseover', function () {
@@ -215,19 +224,50 @@ function make_map(data){
 function activeButtons(){
 
     const buttons = document.querySelectorAll(".button");
-    for (let i = 0; i < buttons.length; i++) {
 
-        (function(i) {
-            buttons[i].addEventListener("click", function(){
-                update_sidebarB(this.getAttribute('data-id'))
+    buttons.forEach((item, index) => {
+
+        item.addEventListener('click', () => {
             
-                // update url
-                let the_id = (buttons[i].getAttribute('data-id')).toString()
-                let the_name = (buttons[i].getAttribute('data-name')).toString()
-                set_url_param(the_id,the_name)
-            })
-        })(i);
-    }
+            // update background sidebar buttons
+            const clickedButton = event.target;
+            clickedButton.classList.toggle('selected');
+
+            buttons.forEach(otherButton => {
+                if (otherButton !== clickedButton) {
+                    otherButton.classList.remove('selected');
+                }
+            });
+
+            console.log(clickedButton)
+            update_sidebarB(clickedButton.getAttribute('data-id'))
+
+            //update url
+            let the_id = (item.getAttribute('data-id')).toString()
+            let the_name = (item.getAttribute('data-name')).toString()
+            set_url_param(the_id,the_name)
+        })
+
+
+        // buttons[i].classList.remove('selected');
+
+        // (function(i) {
+        //     buttons[i].addEventListener("click", function(){
+
+        //         let selected = this;
+        //         console.log(buttons[i])
+                
+        //         this.classList.add('selected');
+
+        //         update_sidebarB(this.getAttribute('data-id'))
+                
+        //         // update url
+        //         let the_id = (buttons[i].getAttribute('data-id')).toString()
+        //         let the_name = (buttons[i].getAttribute('data-name')).toString()
+        //         set_url_param(the_id,the_name)
+        //     })
+        // })(i);
+    })
 }
 
 function highlight_marker(id){
@@ -250,6 +290,7 @@ function update_sidebarA(content){
 }
 
 function update_sidebarB(id){
+    console.log(id)
 
     the_id = parseInt(id)
     selectedData = map_data[the_id - 1]
