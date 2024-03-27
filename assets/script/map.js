@@ -318,13 +318,12 @@ function update_sidebarB(id){
 
     content += '<div id="location_header">'
     content += '<div aria-label="nome">' + '<h3>' + name + '</h3></div>'
-    content += '<div aria-label="periodo">' +  period + '</div></div>'
+    content += '<div aria-label="periodo">' +  period + '</div>'
+    content += '<div aria-label="introduzione" class="intro">' + abstract + '</div>'
     content += '</div>'
 
     // content
     content += '<div id="content">'
-    content += '<div class="info"><p class="parameter">Storia</p>'
-    content += '<p class="value">' + abstract + '</p></div>'
 
     content += '<div class="info"><p class="parameter">Descrizione</p>'
     content += '<p class="value">' + description + '</p></div>'
