@@ -304,17 +304,23 @@ function update_sidebarB(id){
     description = selectedData['description']
     curiosity = selectedData['curiosity']
     senses = selectedData['senses']
+    pictures = selectedData['pictures']
     
     let content = ''
 
-    // cover
-    content += '<div id="cover" aria-label="Didascalia immagine">'
-    // content += '<div style="background-image: url(' + images[the_id] + '), url(' + images[the_id + 1] + ')">' + '</div>'
-    content += '<div id="cover_image">'
-    content += '<img alt="img_1" src="' + images[0] +'">' + '</img>'
-    content += '<img alt="img_1" src="' + images[0] +'">' + '</img>'
-    content += '<img alt="img_1" src="' + images[0] +'">' + '</img>'
-    content += '</div>'
+    // cover images
+    if (pictures != ""){
+        content += '<div id="cover" aria-label="Didascalia immagine">'
+        content += '<div id="cover_image">'
+
+        picture_array = pictures.split(',');
+        for (let i = 0; i < picture_array.length; i++) {
+            content += '<img alt="Foto ' + name+ ' " src="' + picture_array[0] +'"/>'
+            // console.log(picture_array[i])
+        }
+        
+        content += '</div>'
+    }
 
     content += '<div id="location_header">'
     content += '<div aria-label="nome">' + '<h3 class="place_name">' + name + '</h3></div>'

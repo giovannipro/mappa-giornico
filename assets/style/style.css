@@ -195,6 +195,7 @@ header {
 		top: 20px;
 		right: 20px;
 		background-color: white;
+		border: 1px solid gray;
 	}
 
 	.place_name {
