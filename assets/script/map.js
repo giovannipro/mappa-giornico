@@ -317,7 +317,7 @@ function update_sidebarB(id){
     content += '</div>'
 
     content += '<div id="location_header">'
-    content += '<div aria-label="nome">' + '<h3>' + name + '</h3></div>'
+    content += '<div aria-label="nome">' + '<h3 class="place_name">' + name + '</h3></div>'
     content += '<div aria-label="periodo">' +  period + '</div>'
     content += '<div aria-label="introduzione" class="intro">' + abstract + '</div>'
     content += '</div>'
