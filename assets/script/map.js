@@ -239,7 +239,7 @@ function activeButtons(){
                 }
             });
 
-            console.log(clickedButton)
+            // console.log(clickedButton)
             update_sidebarB(clickedButton.getAttribute('data-id'))
 
             //update url
@@ -287,10 +287,17 @@ function reset_icon_color(){
 function update_sidebarA(content){
     sidebarA_container.innerHTML = content;
     update_sidebarC(content, 'A')
+
+    // let buttons = document.querySelectorAll(".button");
+    // buttons.forEach(otherButton => {
+    //     therButton.classList.remove('selected');
+    // })
+
+    // let selected_button = document.getElementById()
 }
 
 function update_sidebarB(id){
-    console.log(id)
+    // console.log(id)
 
     the_id = parseInt(id)
     selectedData = map_data[the_id - 1]
