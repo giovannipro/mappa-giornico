@@ -124,6 +124,7 @@ header {
 
 .place_name {
 	font-size: 1.2rem;
+	line-height: 120%;
 	padding: 0;
 	margin: 0;
 	font-weight: bold;
@@ -194,7 +195,7 @@ header {
   	#map_container{
   		height: calc(60vh - 40px - 1rem);
   		width: 100%;
-  		top: 40px;
+  		top: 60px;
   	}
 
   	#sidebarA, #sidebarB  {
@@ -206,7 +207,7 @@ header {
 		width: 100%;
 		height: auto;
 		background-color: white;
-		top: 40px;
+		top: 60px;
 	}
 
 	#close_sidebarB {
