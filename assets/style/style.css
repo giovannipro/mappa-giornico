@@ -39,6 +39,8 @@ header {
 
 #credits_container {
 	display: none;
+	z-index: 2000;
+	position: relative;
 }
 
 #credits {
@@ -73,7 +75,7 @@ header {
 /* - map */
 #map_container {
 	width: 50%;
-	z-index: -1;
+/*	z-index: -1;*/
 }
 
 /* - sidebar -  */
@@ -86,7 +88,7 @@ header {
 #sidebars {
 	width: 50%;
 	display: flex;
-	z-index: -1;
+/*	z-index: -1;*/
 }
 
 #sidebarA {
