@@ -55,8 +55,9 @@ header {
 	box-shadow: 0px 10px 5px 0px rgba(0,0,0,0.03);
 }
 
-#crediti p {
+#credits p {
 	line-height: 180%;
+	margin-bottom: 1rem;
 }
 
 #credits_button {
@@ -111,11 +112,12 @@ header {
 #sidebarA_content button {
 	background-color: #eee;
 	border-bottom: 1px solid #ccc;
-	height: 50px;
+	height: 60px;
 	cursor: pointer;
 	width: 100%;
 	text-align: left;
-	padding: 0.5rem 1rem;
+	padding: 0.75rem 1rem;
+	line-height: 140%;
 	text-transform: uppercase;
 	color: #0c57a6;
 	font-size: 1rem;
