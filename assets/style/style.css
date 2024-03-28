@@ -14,7 +14,7 @@ header {
 }
 
 #header {
-	padding: 0.5rem;
+	padding: 0.5rem 1rem;
 	height: calc(60px - 1rem);
 	display: flex;
 	justify-content: space-between;
@@ -75,7 +75,7 @@ header {
 	cursor: pointer;
 	width: 100%;
 	text-align: left;
-	padding: 0.5rem;
+	padding: 0.5rem 1rem;
 	text-transform: uppercase;
 	color: #0c57a6;
 	font-size: 1rem;
