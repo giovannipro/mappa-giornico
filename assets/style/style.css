@@ -152,11 +152,11 @@ header {
 #location_header {
 	border-bottom: 1px solid #ccc;
 /*	height: 50px;*/
-	padding: 1.7rem 0.5rem;
+	padding: 1.7rem 1rem;
 }
 
 #content {
-	padding: 0.5rem;
+	padding: 1rem;
 	margin-bottom: 3rem;
 }
 
