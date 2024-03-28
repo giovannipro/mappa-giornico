@@ -19,7 +19,6 @@ const STATE_A = 'stateA'; // open the general map
 const STATE_B = 'stateB'; // open a specific location
 const STATE_C = 'stateC'; // click on a button
 let currentState;
-let myId = 1; 
 
 // Marker icons
 let defaultIcon = L.icon({
@@ -52,7 +51,8 @@ let amenityIcon = L.icon({
     className: ""
 });
 
-let currentId = 0;
+let currentLoc = '';
+let myLoc = '';
 
 const images = [
     'assets/imgs/museo-leventina_1.jpg', 
@@ -88,12 +88,10 @@ function load_data(){
                 return 0;
             });
 
-            // update index
-            newId = 0
-            for (let key in data) {
-                newId += 1
-                data[key].id = newId
-            }
+            for (let i = 0; i < data.length; i++) {
+                data[i].id = parseInt(data[i].id);
+            };
+            // console.log(data)
             
             map_data = data
             make_map(data)
@@ -114,44 +112,6 @@ function make_map(data){
         tileSize: 256
     }).addTo(map);
 
-    // overpass data
-    // fetch(overpass_api)
-    //     .then(response => response.json())
-    //     .then(data => {
-    //         elements = data.elements
-            
-    //         elements.forEach(item => {
-
-    //             lat = item.center.lat
-    //             lon = item.center.lon
-
-    //             if (item.tags){
-    //                 names = item.tags
-
-    //                 name = ''
-    //                 Object.keys(names).forEach(function(key) {
-    //                     let value = names[key];
-    //                     name += key + ': ' + value + '<br/>'
-    //                 });
-    //                 name += '<br/>' + calculateDistance(lat, lon, 46.4019, 8.8752)
-
-    //                 // if (name !== 'parkinga'){
-    //                     const marker = L.circle([lat, lon], 2, {
-    //                         icon: amenityIcon
-    //                     })
-    //                     .bindPopup(name)
-    //                     .on('mouseover', function () {
-    //                         this.openPopup()
-    //                     })
-    //                     .on('mouseout', function () {
-    //                         this.closePopup()
-    //                     })
-    //                     .addTo(map)
-    //                 // }
-    //             }
-    //         })
-    // });
-
     // fix data
     data.forEach(item => {
         item.latitude = parseFloat(item.latitude);
@@ -168,14 +128,17 @@ function make_map(data){
     // load markers
     sidebar_content = '';
     let bounds = L.latLngBounds();
+    count = 0;
     data.forEach(item => {
         const name = item.name;
         const id = item.id;
         const lat = item.latitude;
         const lon = item.longitude;
         const short = item.short_name;
+        // console.log(id, short)
 
         const marker = L.marker([lat, lon],{
+            // id: "item_ " + short,
             alt: name,
             icon: defaultIcon,
             className: name
@@ -188,22 +151,27 @@ function make_map(data){
             this.closePopup()
         })
         .addTo(map)
+
+        this 
+        // console.log(marker)
         
+        marker._id = short;
+
         // on click: open sidebar B
         marker.on('click', function () {
-            update_sidebarB(id)
+            update_sidebarB(short)
             reset_icon_color();
             this.setIcon(activeIcon);
-            set_url_param(id,name)
+            set_url_param(short)
 
+            // update buttons
             buttons = document.querySelectorAll(".button");
             buttons.forEach(otherButton => {
                 otherButton.classList.remove('selected');
             })
+            the_button = document.getElementById(short)
+            the_button.classList.add('selected')
         });
-
-
-        // })
 
         // on mouse hover show pop up
         marker.on('mouseover', function () {
@@ -213,7 +181,13 @@ function make_map(data){
         markers.push(marker);
         bounds.extend(marker.getLatLng());
 
-        sidebar_content += '<button class="button" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-id="' + id + '" tabindex="' + id + '">' + name + '</button>'
+        the_count = ''
+        if (count == 0){
+            the_count = 'count_' + count
+        }
+        count =+ 1;
+
+        sidebar_content += '<button id="' + short +'" class="button ' + the_count + '" aria-controls="map-content" aria-label="' + name + '" aria-expanded="false" data-name="' + name + '" data-short="' + short + '" data-loc="' + short + '" tabindex="' + id + '">' + name + '</button>'
     });
     map.fitBounds(bounds);
 
@@ -240,41 +214,28 @@ function activeButtons(){
             });
 
             // console.log(clickedButton)
-            update_sidebarB(clickedButton.getAttribute('data-id'))
+            // console.log(clickedButton.getAttribute('data-loc'))
+            update_sidebarB(clickedButton.getAttribute('data-loc'))
 
             //update url
-            let the_id = (item.getAttribute('data-id')).toString()
+            let the_loc = (item.getAttribute('data-loc')).toString()
             let the_name = (item.getAttribute('data-name')).toString()
-            set_url_param(the_id,the_name)
+            set_url_param(the_loc,the_name)
         })
-
-
-        // buttons[i].classList.remove('selected');
-
-        // (function(i) {
-        //     buttons[i].addEventListener("click", function(){
-
-        //         let selected = this;
-        //         console.log(buttons[i])
-                
-        //         this.classList.add('selected');
-
-        //         update_sidebarB(this.getAttribute('data-id'))
-                
-        //         // update url
-        //         let the_id = (buttons[i].getAttribute('data-id')).toString()
-        //         let the_name = (buttons[i].getAttribute('data-name')).toString()
-        //         set_url_param(the_id,the_name)
-        //     })
-        // })(i);
     })
 }
 
 function highlight_marker(id){
     reset_icon_color()
 
-    const the_marker = markers[id - 1]; 
-    the_marker.setIcon(activeIcon);
+    markers.forEach(marker => {
+        // console.log(marker._id,id)
+
+        if (marker._id == id){
+            marker.setIcon(activeIcon);
+        }
+    })
+    
 }
 
 function reset_icon_color(){
@@ -287,20 +248,19 @@ function reset_icon_color(){
 function update_sidebarA(content){
     sidebarA_container.innerHTML = content;
     update_sidebarC(content, 'A')
-
-    // let buttons = document.querySelectorAll(".button");
-    // buttons.forEach(otherButton => {
-    //     therButton.classList.remove('selected');
-    // })
-
-    // let selected_button = document.getElementById()
 }
 
-function update_sidebarB(id){
-    // console.log(id)
+function update_sidebarB(loc){
+    // console.log(loc)
 
-    the_id = parseInt(id)
-    selectedData = map_data[the_id - 1]
+    let selectedData;
+
+    if (loc == undefined || loc == '') {
+        selectedData = map_data[0]
+    }
+    else {
+        selectedData = getArrayByParameterValue(map_data,loc)
+    }
 
     id = selectedData['id']
     name = selectedData['name'] 
@@ -312,6 +272,7 @@ function update_sidebarB(id){
     curiosity = selectedData['curiosity']
     senses = selectedData['senses']
     pictures = selectedData['pictures']
+    short = selectedData['short_name'];
     
     let content = ''
 
@@ -325,7 +286,6 @@ function update_sidebarB(id){
             content += '<img alt="Foto ' + name+ ' " src="' + picture_array[0] +'"/>'
             // console.log(picture_array[i])
         }
-        
         content += '</div>'
     }
 
@@ -367,7 +327,8 @@ function update_sidebarB(id){
         set_view(lat,lon,default_zoom)
     }
 
-    highlight_marker(id)
+    // console.log(id)
+    highlight_marker(short)
 }
 
 function update_sidebarC(content,sidebar){
@@ -407,25 +368,25 @@ function set_view(lat,lon, zoom){
 function updateState(){
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    let the_id = urlParams.get('id')
+    let the_loc = urlParams.get('loc')
 
-    if (the_id !== null){
+    if (the_loc !== null){
         currentState = STATE_B;
-        myId = the_id
+        myLoc = the_loc
     }
     else {
         currentState = STATE_A;
     }
 
-    update_sidebarB(myId)
+    update_sidebarB(myLoc)
 }
 
-function set_url_param(id,name) {
+function set_url_param(name) {
 
     const newURL = new URL(window.location.href);
 
     let newParams = {
-        id: id, 
+        // id: id, 
         loc: name
     };
       

@@ -27,6 +27,21 @@ function degToRad(degrees) {
     return degrees * (Math.PI / 180);
 }
 
+// function to get the id based on a parameter value
+function getArrayByParameterValue(obj, value) {
+    // console.log(obj,value)
+
+    let id;
+    let selected_place;
+    for (let i = 0; i < obj.length; i++) {
+        if (obj[i].short_name.replace(' ','') == value){
+            selected_place =  obj[i]
+            // console.log(obj[i].short_name.replace(' ',''), value, id)
+        }        
+    }
+    return selected_place
+}
+
 window.addEventListener('load', function () {
     load_data();
 })
