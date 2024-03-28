@@ -76,6 +76,10 @@ header {
 	width: 100%;
 	text-align: left;
 	padding: 0.5rem;
+	text-transform: uppercase;
+	color: #0c57a6;
+	font-size: 1rem;
+	font-weight: bold;
 }
 
 /* - sidebar content - */
