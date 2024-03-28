@@ -42,6 +42,11 @@ function getArrayByParameterValue(obj, value) {
     return selected_place
 }
 
+function credits(){
+
+}
+
 window.addEventListener('load', function () {
     load_data();
+    credits()
 })
