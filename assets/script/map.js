@@ -58,16 +58,11 @@ const images = [
     'assets/imgs/museo-leventina_1.jpg', 
 ]
 
-const osm_api = 'https://api.openstreetmap.org/api/0.6/map?bbox=-0.111110,51.111110,0.111111,51.111111'
+// const osm_api = 'https://api.openstreetmap.org/api/0.6/map?bbox=-0.111110,51.111110,0.111111,51.111111'
 
-const query_a = '[out:json];area[name="Giornico"]->.searchArea;(way["amenity"~"parking|toilets|public_transport"](area.searchArea););out center;>;out skel qt;'
-const query_b = '[out:json];(way(around:1400,46.4019, 8.8752););out center;' // [amenity]
-const overpass_api = 'https://overpass-api.de/api/interpreter?data=' + query_b
-
-
-// relation["amenity"="parking"](area.searchArea)
-// node["amenity"="parking"](area.searchArea);  
-// console.log(overpass_api)
+// const query_a = '[out:json];area[name="Giornico"]->.searchArea;(way["amenity"~"parking|toilets|public_transport"](area.searchArea););out center;>;out skel qt;'
+// const query_b = '[out:json];(way(around:1400,46.4019, 8.8752););out center;' // [amenity]
+// const overpass_api = 'https://overpass-api.de/api/interpreter?data=' + query_b
 
 // sidebar
 const sidebarA_container = document.getElementById("sidebarA_content");
@@ -115,14 +110,7 @@ function make_map(data){
     // fix data
     data.forEach(item => {
         item.latitude = parseFloat(item.latitude);
-        item.longitude = parseFloat(item.longitude); 
-
-        let shortA = item.short_name;
-        let shortB = shortA.toLowerCase();
-        let shortC = shortB.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,'');
-        let shortD = shortC.replaceAll(' ', '_')
-
-        item.short_name = shortD
+        item.longitude = parseFloat(item.longitude);
     })
         
     // load markers
@@ -135,10 +123,8 @@ function make_map(data){
         const lat = item.latitude;
         const lon = item.longitude;
         const short = item.short_name;
-        // console.log(id, short)
 
         const marker = L.marker([lat, lon],{
-            // id: "item_ " + short,
             alt: name,
             icon: defaultIcon,
             className: name
@@ -151,9 +137,6 @@ function make_map(data){
             this.closePopup()
         })
         .addTo(map)
-
-        this 
-        // console.log(marker)
         
         marker._id = short;
 
@@ -234,8 +217,7 @@ function highlight_marker(id){
         if (marker._id == id){
             marker.setIcon(activeIcon);
         }
-    })
-    
+    })   
 }
 
 function reset_icon_color(){
@@ -251,8 +233,6 @@ function update_sidebarA(content){
 }
 
 function update_sidebarB(loc){
-    // console.log(loc)
-
     let selectedData;
 
     if (loc == undefined || loc == '') {
@@ -386,7 +366,6 @@ function set_url_param(name) {
     const newURL = new URL(window.location.href);
 
     let newParams = {
-        // id: id, 
         loc: name
     };
       
