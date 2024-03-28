@@ -43,7 +43,28 @@ function getArrayByParameterValue(obj, value) {
 }
 
 function credits(){
+    const button = document.getElementById('credits_button');
+    const icon = document.getElementById('credits_arrow');
+    const credits_box = document.getElementById('credits_container');
+    let open = false;
+    const up = '&darr;'
+    const down = '&uarr;'
 
+    button.addEventListener("click", credits_panel);
+
+    function credits_panel(){
+        if (open == false ){
+            icon.innerHTML = down;
+            credits_box.style.display = 'block';
+            open = true;
+        }
+        else {
+            icon.innerHTML = up;
+            credits_box.style.display = 'none';
+            open = false;
+        }
+
+    }
 }
 
 window.addEventListener('load', function () {
