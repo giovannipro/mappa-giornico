@@ -276,6 +276,7 @@ header {
 		right: 20px;
 		background-color: white;
 		border: 1px solid gray;
+		cursor: pointer;
 	}
 
 	.place_name {
